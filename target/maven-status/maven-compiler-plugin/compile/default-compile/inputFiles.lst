@@ -1,0 +1,10 @@
+L:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\client\CategoryClient.java
+L:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\controller\ExpenseController.java
+L:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\dto\CategoryDto.java
+L:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\dto\ExpenseRequest.java
+L:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\dto\ExpenseResponse.java
+L:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\dto\ExpenseSummaryDto.java
+L:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\entity\Expense.java
+L:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\ExpenseApplication.java
+L:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\repository\ExpenseRepository.java
+L:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\service\ExpenseService.java

@@ -1,0 +1,14 @@
+com\spendwise\expense\client\CategoryClient.class
+com\spendwise\expense\dto\ExpenseSummaryDto$Builder.class
+com\spendwise\expense\repository\ExpenseRepository.class
+com\spendwise\expense\dto\ExpenseResponse.class
+com\spendwise\expense\controller\ExpenseController.class
+com\spendwise\expense\dto\ExpenseRequest.class
+com\spendwise\expense\dto\ExpenseResponse$Builder.class
+com\spendwise\expense\dto\ExpenseSummaryDto.class
+com\spendwise\expense\dto\CategoryDto.class
+com\spendwise\expense\entity\Expense$Builder.class
+com\spendwise\expense\entity\Expense.class
+com\spendwise\expense\dto\CategoryDto$Builder.class
+com\spendwise\expense\ExpenseApplication.class
+com\spendwise\expense\service\ExpenseService.class
