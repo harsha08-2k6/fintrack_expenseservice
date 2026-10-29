@@ -1,4 +1,5 @@
 d:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\client\CategoryClient.java
+d:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\config\InternalGatewaySecurityFilter.java
 d:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\controller\ExpenseController.java
 d:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\dto\CategoryDto.java
 d:\FinTrack\backend\expense-service\src\main\java\com\spendwise\expense\dto\ExpenseRequest.java
