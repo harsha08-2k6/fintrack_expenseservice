@@ -35,7 +35,7 @@ public class ExpenseController {
 
     @GetMapping
     public ResponseEntity<?> getExpenses(
-            @RequestHeader(value = "X-User-Id", required = false) Long userId,
+            @RequestHeader(value = "X-Authenticated-User-Id", required = false) Long userId,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false, defaultValue = "10") Integer size,
             @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
@@ -57,7 +57,7 @@ public class ExpenseController {
     @GetMapping("/{id}")
     public ResponseEntity<ExpenseResponse> getExpenseById(
             @PathVariable Long id,
-            @RequestHeader(value = "X-User-Id", required = false) Long userId
+            @RequestHeader(value = "X-Authenticated-User-Id", required = false) Long userId
     ) {
         validateUser(userId);
         return ResponseEntity.ok(expenseService.getExpenseById(id, userId));
@@ -66,7 +66,7 @@ public class ExpenseController {
     @PostMapping
     public ResponseEntity<ExpenseResponse> createExpense(
             @Valid @RequestBody ExpenseRequest request,
-            @RequestHeader(value = "X-User-Id", required = false) Long userId
+            @RequestHeader(value = "X-Authenticated-User-Id", required = false) Long userId
     ) {
         validateUser(userId);
         ExpenseResponse response = expenseService.createExpense(request, userId);
@@ -77,7 +77,7 @@ public class ExpenseController {
     public ResponseEntity<ExpenseResponse> updateExpense(
             @PathVariable Long id,
             @Valid @RequestBody ExpenseRequest request,
-            @RequestHeader(value = "X-User-Id", required = false) Long userId
+            @RequestHeader(value = "X-Authenticated-User-Id", required = false) Long userId
     ) {
         validateUser(userId);
         ExpenseResponse response = expenseService.updateExpense(id, request, userId);
@@ -87,7 +87,7 @@ public class ExpenseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExpense(
             @PathVariable Long id,
-            @RequestHeader(value = "X-User-Id", required = false) Long userId
+            @RequestHeader(value = "X-Authenticated-User-Id", required = false) Long userId
     ) {
         validateUser(userId);
         expenseService.deleteExpense(id, userId);
@@ -96,7 +96,7 @@ public class ExpenseController {
 
     @GetMapping("/summary")
     public ResponseEntity<ExpenseSummaryDto> getSummary(
-            @RequestHeader(value = "X-User-Id", required = false) Long userId
+            @RequestHeader(value = "X-Authenticated-User-Id", required = false) Long userId
     ) {
         validateUser(userId);
         return ResponseEntity.ok(expenseService.getSummary(userId));
