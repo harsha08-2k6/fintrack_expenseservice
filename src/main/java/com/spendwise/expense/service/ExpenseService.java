@@ -67,9 +67,8 @@ public class ExpenseService {
     }
 
     public ExpenseResponse createExpense(ExpenseRequest request, Long userId) {
-        Long resolvedUserId = userId != null ? userId : request.getUserId();
-        if (resolvedUserId == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User ID is required");
+        if (userId == null || userId <= 0) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User ID is required");
         }
 
         Expense expense = Expense.builder()
@@ -77,7 +76,7 @@ public class ExpenseService {
                 .description(request.getDescription())
                 .amount(request.getAmount())
                 .categoryId(request.getCategoryId())
-                .userId(resolvedUserId)
+                .userId(userId)
                 .expenseDate(request.getExpenseDate())
                 .paymentMethod(request.getPaymentMethod() != null ? request.getPaymentMethod() : "CARD")
                 .receiptUrl(request.getReceiptUrl())

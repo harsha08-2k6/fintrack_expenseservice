@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,17 +27,22 @@ public class ExpenseController {
         this.expenseService = expenseService;
     }
 
+    private void validateUser(Long userId) {
+        if (userId == null || userId <= 0) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User authentication required");
+        }
+    }
+
     @GetMapping
     public ResponseEntity<?> getExpenses(
-            @RequestHeader(value = "X-User-Id", required = false) Long headerUserId,
-            @RequestParam(value = "userId", required = false, defaultValue = "1") Long paramUserId,
+            @RequestHeader(value = "X-User-Id", required = false) Long userId,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false, defaultValue = "10") Integer size,
             @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @RequestParam(value = "categoryId", required = false) Long categoryId
     ) {
-        Long userId = headerUserId != null ? headerUserId : paramUserId;
+        validateUser(userId);
 
         if (page != null) {
             Pageable pageable = PageRequest.of(page, size);
@@ -51,19 +57,18 @@ public class ExpenseController {
     @GetMapping("/{id}")
     public ResponseEntity<ExpenseResponse> getExpenseById(
             @PathVariable Long id,
-            @RequestHeader(value = "X-User-Id", required = false) Long headerUserId,
-            @RequestParam(value = "userId", required = false, defaultValue = "1") Long paramUserId
+            @RequestHeader(value = "X-User-Id", required = false) Long userId
     ) {
-        Long userId = headerUserId != null ? headerUserId : paramUserId;
+        validateUser(userId);
         return ResponseEntity.ok(expenseService.getExpenseById(id, userId));
     }
 
     @PostMapping
     public ResponseEntity<ExpenseResponse> createExpense(
             @Valid @RequestBody ExpenseRequest request,
-            @RequestHeader(value = "X-User-Id", required = false) Long headerUserId
+            @RequestHeader(value = "X-User-Id", required = false) Long userId
     ) {
-        Long userId = headerUserId != null ? headerUserId : request.getUserId();
+        validateUser(userId);
         ExpenseResponse response = expenseService.createExpense(request, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -72,10 +77,9 @@ public class ExpenseController {
     public ResponseEntity<ExpenseResponse> updateExpense(
             @PathVariable Long id,
             @Valid @RequestBody ExpenseRequest request,
-            @RequestHeader(value = "X-User-Id", required = false) Long headerUserId,
-            @RequestParam(value = "userId", required = false, defaultValue = "1") Long paramUserId
+            @RequestHeader(value = "X-User-Id", required = false) Long userId
     ) {
-        Long userId = headerUserId != null ? headerUserId : paramUserId;
+        validateUser(userId);
         ExpenseResponse response = expenseService.updateExpense(id, request, userId);
         return ResponseEntity.ok(response);
     }
@@ -83,20 +87,18 @@ public class ExpenseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExpense(
             @PathVariable Long id,
-            @RequestHeader(value = "X-User-Id", required = false) Long headerUserId,
-            @RequestParam(value = "userId", required = false, defaultValue = "1") Long paramUserId
+            @RequestHeader(value = "X-User-Id", required = false) Long userId
     ) {
-        Long userId = headerUserId != null ? headerUserId : paramUserId;
+        validateUser(userId);
         expenseService.deleteExpense(id, userId);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/summary")
     public ResponseEntity<ExpenseSummaryDto> getSummary(
-            @RequestHeader(value = "X-User-Id", required = false) Long headerUserId,
-            @RequestParam(value = "userId", required = false, defaultValue = "1") Long paramUserId
+            @RequestHeader(value = "X-User-Id", required = false) Long userId
     ) {
-        Long userId = headerUserId != null ? headerUserId : paramUserId;
+        validateUser(userId);
         return ResponseEntity.ok(expenseService.getSummary(userId));
     }
 }
